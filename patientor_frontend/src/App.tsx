@@ -14,10 +14,13 @@ const App = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
 
   useEffect(() => {
-    void axios.get<void>(`${apiBaseUrl}/ping`);
+    void axios.get<void>(`${apiBaseUrl}/ping`)
+    .then(res => console.log('Ping:', res.data))
+    .catch(err => console.error('Ping error:', err));
 
     const fetchPatientList = async () => {
       const patients = await patientService.getAll();
+      console.log('Patients:', patients);
       setPatients(patients);
     };
     void fetchPatientList();
