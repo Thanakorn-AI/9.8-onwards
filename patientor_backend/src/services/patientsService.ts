@@ -1,6 +1,7 @@
 // patientor_backend/src/services/patientsService.ts
 import patientsData from '../../data/patients';
-import { Patient, NonSensitivePatient } from '../types';
+import { Patient, NonSensitivePatient, NewPatient } from '../types';
+import { v1 as uuid } from 'uuid';
 
 const patients: Patient[] = patientsData;
 
@@ -14,6 +15,16 @@ const getPatients = (): NonSensitivePatient[] => {
   }));
 };
 
+const addPatient = (entry: NewPatient): Patient => {
+  const newPatient = {
+    id: uuid(), // Generate unique ID
+    ...entry
+  };
+  patients.push(newPatient);
+  return newPatient;
+};
+
 export default {
-  getPatients
+  getPatients,
+  addPatient
 };
